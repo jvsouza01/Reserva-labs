@@ -1,0 +1,30 @@
+@charset "ISO-8859-1";
+
+.form-container {	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 55vh;
+	width: 20%;
+}
+
+.button-container {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.tabela {
+	padding-right: 200px;
+	padding-left: 200px;
+	padding-top: 100px;
+}
+
+.username {
+	margin-left: auto;	
+	margin-right:80px;
+}
+
+.navbar {
+	width: 100%;
+}

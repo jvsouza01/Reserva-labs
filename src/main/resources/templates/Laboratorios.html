@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous" />
+<link rel="stylesheet" href="ReservaStyle.css" />
+<title>Cadastro de Laboratório</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="home"> <svg
+				xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+				fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+          <path
+					d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z" />
+          <path
+					d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z" />
+        </svg>
+		</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav navbar">
+				<li class="nav-item mr-4"><a class="nav-link" href="reserva">Reservar</a>
+				</li>
+				<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
+				<li class="nav-item username">
+					<h5 th:if="${user} != null"
+						th:text="${user.getPrimeiroNome()} ?: ''"></h5>
+				</li>
+				<li class="nav-item "><a class="nav-link"
+					th:if="${user} != null" href="logout">sair</a></li>
+			</ul>
+		</div>
+	</nav>
+
+
+
+	<div class="form-container">
+		<form th:action="@{/laboratorios}" method="post">
+
+			<div class="form-row">
+				<div class="form-group col-6">
+					<label for="descricao">Descrição</label> <input type="text"
+						class="form-control" id="descricao" name="descricao" required
+						title="Este campo é obrigatório">
+				</div>
+				<div class="form-group col-2-md-4">
+					<label for="numMaquinas">Número de Máquinas</label> <input
+						type="number" class="form-control" id="numMaquinas"
+						name="numMaquinas" required title="Este campo é obrigatório" min="0">
+				</div>
+			</div>
+
+
+			<div class="form-row">
+				<div class="form-group col-sm">
+					<label for="localizacao">Localização</label> <select
+						class="form-control" id="localizacao" name="localizacao" required
+						title="Este campo é obrigatório">
+						<option value="" disabled>Selecione...</option>
+						<option value="Bloco A">Bloco A</option>
+						<option value="Bloco B">Bloco B</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row d-flex justify-content-center" style="color:red">
+				<small th:text="${error}"></small>
+			</div>
+
+			<div class="form-row button-container">
+				<div class="col-2">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+</body>
+</html>

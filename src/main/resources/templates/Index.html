@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reservas</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="Style.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed">
+      <a class="navbar-brand" href="home">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-house-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5Z"
+          />
+          <path
+            d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"
+          />
+        </svg>
+      </a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav navbar">
+          <li class="nav-item mr-4">
+            <a class="nav-link" href="reserva">Reservar</a>
+          </li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="laboratorios" th:if="${user.admin}">Cadastrar laboratório</a>
+          	</li>
+          	<li class="nav-item mr-4" th:if="${user} != null">
+            	<a class="nav-link" href="cadastroProfessor" th:if="${user.admin}">Cadastrar professor</a>
+          	</li>
+          <li class="nav-item username">
+            <h5 th:if="${user} != null" th:text="${user.getPrimeiroNome()} ?: ''"></h5>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:if="${user} != null" href="logout">sair</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+    <div th:if="${user} == null" class="container form-container">
+    <form method="POST" action="/login">
+      <div class="form-group">
+        <label>Login</label>
+        <input required type="text" class="form-control" name="login" placeholder="Login">
+      </div>
+      <div class="form-group">
+        <label>Senha</label>
+        <input required type="password" class="form-control" name="senha" placeholder="Senha">
+      </div>
+      <small style="color:red" th:text="${authError} != null ? ${authError} : ''"></small>
+      <div class="button-container">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </div>
+    </form>
+    </div>
+
+	<div class="tabela">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Disciplina</th>
+          <th scope="col">Professor</th>
+          <th scope="col">Laboratorio</th>
+          <th scope="col">Data</th>
+          <th scope="col">Início</th>
+          <th scope="col">Fim</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="reserva : ${reservas}">
+          <td th:text="${reserva.disciplina}"></td>
+          <td th:text="${reserva.professor.nome}"></td>
+          <td th:text="${reserva.laboratorio.descricao}"></td>
+          <td th:text="${reserva.getDia()}"></td>
+          <td th:text="${reserva.getDataInicioFormatada()}"></td>
+          <td th:text="${reserva.getDataFimFormatada()}"></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>
